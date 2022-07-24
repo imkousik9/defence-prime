@@ -1,4 +1,5 @@
 import { ReactNode, FC } from 'react';
+import Head from 'next/head';
 
 import Navbar from 'components/Navbar';
 import Sidebar from 'components/Sidebar';
@@ -12,6 +13,10 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
+      <Head>
+        <title>defence prime</title>
+      </Head>
+
       <Navbar />
       <main className={style.container}>
         <Sidebar />
