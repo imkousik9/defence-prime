@@ -21,22 +21,23 @@ model User {
   password  String
 }
 
-model Videos {
-  id           String      @unique
-  title        String
-  channelName  String
-  views        Int
-  uploadedOn   String
-  avatar       String      @db.Text
-  description  String?     @db.Text
-  Categories   Categories? @relation(fields: [categoriesId], references: [id])
-  categoriesId String?
+model Video {
+  id          String  @unique
+  title       String
+  channelName String
+  views       Int
+  uploadedOn  String
+  avatar      String  @db.Text
+  description String? @db.Text
 
-  @@index([categoriesId])
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+
+  @@index([categoryId])
 }
 
-model Categories {
-  id           String   @unique
+model Category {
+  id           String  @unique
   categoryName String
-  videos       Videos[]
+  videos       Video[]
 }
