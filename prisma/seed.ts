@@ -8,14 +8,14 @@ const prisma = new PrismaClient();
 async function main() {
   console.log(`Start seeding ...`);
   for (const v of videoData) {
-    const video = await prisma.videos.create({
+    const video = await prisma.video.create({
       data: v
     });
     console.log(`Created video with id: ${video.id}`);
   }
 
   for (const c of categories) {
-    const category = await prisma.categories.create({
+    const category = await prisma.category.create({
       data: c
     });
     console.log(`Created video category with id: ${category.id}`);

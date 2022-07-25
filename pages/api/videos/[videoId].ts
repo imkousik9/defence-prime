@@ -11,7 +11,7 @@ export default async function videoHandler(
     return res.status(404).json({ message: 'videoId is not valid' });
   }
 
-  const data = await prisma.videos.findFirst({
+  const data = await prisma.video.findFirst({
     where: {
       id: {
         equals: videoId
