@@ -1,25 +1,27 @@
 import type { InferGetServerSidePropsType, NextPage } from 'next';
-import { getVideos } from 'lib/getVideos';
+import { getVideos } from 'lib';
+import { getCategories } from 'utils';
 
 import Layout from 'components/Layout';
 import VideoList from 'components/Home/VideoList';
 
-import styles from '../styles/Home.module.css';
-
 const Home: NextPage = ({
-  videos
+  videos,
+  categories
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <Layout>
-      <VideoList videos={videos} />
+      <VideoList videos={videos} categories={categories} />
     </Layout>
   );
 };
 
 export const getServerSideProps = async () => {
   const videos = await getVideos();
+  const categories = getCategories(videos);
+
   return {
-    props: { videos: videos }
+    props: { videos: videos, categories: categories }
   };
 };
 

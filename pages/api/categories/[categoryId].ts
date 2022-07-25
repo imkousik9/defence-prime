@@ -6,12 +6,12 @@ export default async function categoryHandler(
   res: NextApiResponse
 ) {
   const categoryId = req.query['categoryId'];
-  console.log(categoryId);
+
   if (!categoryId || typeof categoryId !== 'string') {
     return res.status(404).json({ message: 'categoryId is not valid' });
   }
 
-  const data = await prisma.categories.findFirst({
+  const data = await prisma.category.findFirst({
     where: {
       id: {
         equals: categoryId

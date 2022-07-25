@@ -6,11 +6,14 @@ export type Videos = {
   uploadedOn: string;
   avatar: string;
   description?: string | null;
-  categoriesId?: number;
+  categoryId?: string;
+  category?: { id: string; categoryName: string };
 };
 
+const URL = process.env.NEXT_PUBLIC_URL;
+
 export const getVideos = async () => {
-  const res = await fetch('http://localhost:3000/api/videos');
+  const res = await fetch(`${URL}/api/videos`);
 
   const videos = (await res.json()) as Videos[];
 
