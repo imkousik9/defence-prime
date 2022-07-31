@@ -1,8 +1,13 @@
-import { MenuIcon, SearchIcon, LoginIcon } from '@heroicons/react/outline';
+import NextLink from 'next/link';
+
+import { MenuIcon, SearchIcon, UserCircleIcon } from '@heroicons/react/solid';
 
 import style from './Navbar.module.css';
+import { useAuth } from 'lib';
 
 const Navbar = () => {
+  const { user, signOut } = useAuth();
+
   return (
     <nav className={style.navbar}>
       <div className={style.navbar_main}>
@@ -22,9 +27,29 @@ const Navbar = () => {
             id=""
           />
         </div>
-        <div>
-          <LoginIcon className={style.login_icon} />
-        </div>
+
+        {user ? (
+          <div className={style.navbar_auth}>
+            <NextLink href="/profile">
+              <a className={style.navbar_profile}>
+                <UserCircleIcon className={style.login_icon} />
+              </a>
+            </NextLink>
+
+            <div
+              className={style.navbar_auth_link}
+              onClick={() => {
+                signOut();
+              }}
+            >
+              Logout
+            </div>
+          </div>
+        ) : (
+          <NextLink href="/login">
+            <a className={style.navbar_auth_link}>Login</a>
+          </NextLink>
+        )}
       </div>
     </nav>
   );
