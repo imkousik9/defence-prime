@@ -1,0 +1,110 @@
+.auth {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: var(--bg-color);
+}
+
+.auth_container {
+  width: 25rem;
+  padding: 2rem;
+  box-shadow: #ec8282 0px 0px 9px 2px;
+}
+
+.auth_title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth_main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.3rem;
+  font-size: 0.9rem;
+}
+.auth_main label {
+  margin-bottom: 8px;
+}
+
+.auth_email,
+.auth_password,
+.auth_name {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth_fullname {
+  display: flex;
+  gap: 1.3rem;
+}
+
+.text_input {
+  font-size: 0.9rem;
+  color: var(--font-color-secondary);
+  background-color: var(--container-color-dark);
+  width: 100%;
+  padding: 0.4rem 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  border: 2px solid var(--container-color);
+  border-radius: 5px;
+  outline: none;
+}
+
+.text_input:focus,
+.text_input:hover {
+  border-color: #ec8282;
+}
+
+.select_input {
+  display: flex;
+  align-items: center;
+}
+
+.select_input span {
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.auth_checkbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.auth_checkbox a {
+  color: #ec8282;
+  cursor: pointer;
+}
+
+.checkbox_input {
+  accent-color: #ec8282;
+}
+
+.auth_btn,
+.auth_test_btn {
+  text-align: center;
+  background-color: #da6666;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.auth_btn {
+  border: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+.auth_btn:hover {
+  background-color: #df5555;
+}
+
+.auth_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth_icon {
+  height: 1.6rem;
+}

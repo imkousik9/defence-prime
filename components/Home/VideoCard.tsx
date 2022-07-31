@@ -3,7 +3,7 @@ import { trimExtraChars, viewsFormatter } from 'utils';
 import { formatDistanceToNow } from 'date-fns';
 
 import { DotsVerticalIcon } from '@heroicons/react/solid';
-import style from './videoCard.module.css';
+import style from './VideoCard.module.css';
 
 const VideoCard = ({ id, title, channelName, views, uploadedOn, avatar }) => {
   return (

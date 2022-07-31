@@ -4,7 +4,7 @@ import { Videos } from 'lib/getVideos';
 
 import VideoCard from './VideoCard';
 
-import style from './videoList.module.css';
+import style from './VideoList.module.css';
 
 interface VideoListProps {
   videos: Array<Videos>;
