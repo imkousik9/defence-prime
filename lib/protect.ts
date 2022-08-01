@@ -1,5 +1,5 @@
 import cookie from 'cookie';
-import decode from 'jwt-decode';
+import { decode } from 'jsonwebtoken';
 
 export const protect = (req, res) => {
   const cookies = cookie.parse(req.headers.cookie ?? '');

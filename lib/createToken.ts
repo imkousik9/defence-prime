@@ -1,9 +1,11 @@
-import sign from 'jwt-encode';
+import { sign } from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET;
 
-export const createToken = (user) => {
-  user.password = undefined;
-
-  return sign(user, secret);
+export const createToken = (user: string) => {
+  try {
+    return sign(user, secret);
+  } catch (error) {
+    console.log(error.message);
+  }
 };

@@ -12,7 +12,13 @@ export default async function userHandler(
 
       const user = await prisma.user.findUnique({
         where: {
-          id: authUser?.id
+          id: authUser
+        },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true
         }
       });
 
