@@ -4,9 +4,16 @@ import { prisma } from 'lib/prisma';
 import bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
 
+type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 export default async function signupHandler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<User | string | null>
 ) {
   const { email, password, firstName, lastName } = req.body;
 
@@ -40,10 +47,16 @@ export default async function signupHandler(
         }
       });
 
-      const token = createToken(newUser);
+      const token = createToken(newUser?.id);
       const cookieSerialized = serializeCookie(token);
       res.setHeader('Set-Cookie', cookieSerialized);
-      return res.status(200).json(newUser);
+
+      return res.status(200).json({
+        id: newUser?.id,
+        firstName: newUser?.firstName,
+        lastName: newUser?.lastName,
+        email: newUser?.email
+      });
     } catch (error) {
       return res.status(400).send(error.message);
     }

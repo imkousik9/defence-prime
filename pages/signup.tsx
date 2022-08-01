@@ -66,7 +66,7 @@ const Signup: NextPage = () => {
             <div className={style.auth_email}>
               <label htmlFor="mail">Email Address</label>
               <input
-                placeholder="test@gmail.com"
+                placeholder="test@mail.com"
                 className={style.text_input}
                 type="email"
                 value={email}
