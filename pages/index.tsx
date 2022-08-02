@@ -5,10 +5,9 @@ import { getCategories } from 'utils';
 import Layout from 'components/Layout';
 import VideoList from 'components/Home/VideoList';
 
-const Home: NextPage = ({
-  videos,
-  categories
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage<
+  InferGetServerSidePropsType<typeof getServerSideProps>
+> = ({ videos, categories }) => {
   return (
     <Layout>
       <VideoList videos={videos} categories={categories} />

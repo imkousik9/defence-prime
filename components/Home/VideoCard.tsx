@@ -7,7 +7,7 @@ import style from './VideoCard.module.css';
 
 const VideoCard = ({ id, title, channelName, views, uploadedOn, avatar }) => {
   return (
-    <NextLink href={`/watch/${id}`}>
+    <NextLink href={`/watch?v=${id}`}>
       <a className={style.videoCard}>
         <img
           className={style.videoCard_img}
