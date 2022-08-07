@@ -7,6 +7,19 @@ export type Video = {
   avatar: string;
   description?: string | null;
   categoryId?: string | null;
+  comments?: {
+    id: string;
+    text: string;
+    user: {
+      firstName: string;
+      lastName: string;
+    };
+  }[];
+  likes?: {
+    id: string;
+    userId: string;
+    videoId: string;
+  }[];
 };
 
 const URL = process.env.NEXT_PUBLIC_URL;
