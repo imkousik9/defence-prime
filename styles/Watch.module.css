@@ -1,0 +1,18 @@
+.watch {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .watch {
+    margin-left: 95px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .watch {
+    margin-left: 250px;
+    padding: 2rem;
+  }
+}

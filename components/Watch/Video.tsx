@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
-import { viewsFormatter } from 'utils';
+import { findLikedOrNot, viewsFormatter } from 'utils';
 import { formatDistanceToNow } from 'date-fns';
+import { useAuth } from 'lib';
 import { Video } from 'lib/getVideo';
 
 import { ThumbUpIcon, ClockIcon } from '@heroicons/react/outline';
+import { ThumbUpIcon as ThumbUpSolidIcon } from '@heroicons/react/solid';
 
 import style from './Video.module.css';
 
@@ -12,6 +15,34 @@ interface VideoProps {
 }
 
 const Video = ({ video }: VideoProps) => {
+  const [like, setLike] = useState(false);
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    setLike(findLikedOrNot(video, user?.id));
+  }, [video, user?.id]);
+
+  const likeUnlike = async () => {
+    if (like) {
+      return fetch(`/api/likes/${video?.id}`, {
+        method: 'DELETE'
+      }).then(() => {
+        setLike(false);
+      });
+    }
+
+    fetch(`/api/likes/${video?.id}`, {
+      method: 'POST'
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (user?.id === data?.userId && video?.id === data?.videoId) {
+          setLike(true);
+        }
+      });
+  };
+
   return (
     <div className={style.video_container}>
       <div className={style.video_iframe}>
@@ -36,10 +67,18 @@ const Video = ({ video }: VideoProps) => {
                 addSuffix: true
               })}
             </span>
+
             <div className={style.video_icons}>
-              <span>
-                <ThumbUpIcon className={style.video_icon} /> Like
-              </span>
+              {like ? (
+                <span onClick={likeUnlike}>
+                  <ThumbUpSolidIcon className={style.video_icon} /> Liked
+                </span>
+              ) : (
+                <span onClick={likeUnlike}>
+                  <ThumbUpIcon className={style.video_icon} /> Like
+                </span>
+              )}
+
               <span>
                 <ClockIcon className={style.video_icon} /> Save to Watch later
               </span>
@@ -63,6 +102,8 @@ const Video = ({ video }: VideoProps) => {
           </div>
           <p className={style.video_description}>{video?.description}</p>
         </div>
+
+        <div className={style.video_divider} />
       </div>
     </div>
   );

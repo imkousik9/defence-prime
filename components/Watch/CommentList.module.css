@@ -1,0 +1,83 @@
+.commentList {
+  padding: 0 1rem;
+}
+
+.commentList_input {
+  margin-block: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.commentList_input_text {
+  width: 100%;
+  height: 2rem;
+  background-color: inherit;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.commentList_input_btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.commentList_input_btnClear {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.commentList_input_btnComment {
+  cursor: pointer;
+  background-color: var(--container-color-dark);
+  color: white;
+  font-size: 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border: 0;
+  border-radius: 5px;
+}
+
+.commentList_comments {
+  margin-top: 3rem;
+}
+
+.commentList_comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.commentList_comment_avatar {
+  background-color: var(--container-color-dark);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  margin-right: 10px;
+}
+
+.commentList_comment_avatar h4 {
+  padding: 1rem;
+}
+
+.commentList_comment_name {
+  font-size: 0.93rem;
+}
+
+.commentList_comment p {
+  font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+  .commentList {
+    padding: 0;
+  }
+}

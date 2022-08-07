@@ -11,7 +11,7 @@
 }
 
 .video_info {
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 1rem 0 1rem;
 }
 
 .video_title {
@@ -88,10 +88,6 @@
 }
 
 @media (min-width: 768px) {
-  .video_container {
-    margin-left: 95px;
-  }
-
   .video_info_states_icons {
     font-size: 0.9rem;
   }
@@ -106,12 +102,7 @@
 }
 
 @media (min-width: 1024px) {
-  .video_container {
-    margin-left: 250px;
-    padding: 2rem;
-  }
-
   .video_info {
-    padding: 1.5rem 0;
+    padding: 1.5rem 0 0 0;
   }
 }

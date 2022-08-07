@@ -5,19 +5,48 @@ export default async function videoHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const videoId = req.query['videoId'];
+  if (req.method === 'GET') {
+    const videoId = req.query['videoId'];
 
-  if (!videoId || typeof videoId !== 'string') {
-    return res.status(404).json({ message: 'videoId is not valid' });
+    if (!videoId || typeof videoId !== 'string') {
+      return res.status(404).json({ message: 'videoId is not valid' });
+    }
+
+    try {
+      const data = await prisma.video.findFirst({
+        where: {
+          id: {
+            equals: videoId
+          }
+        },
+        include: {
+          comments: {
+            select: {
+              id: true,
+              text: true,
+              user: {
+                select: {
+                  firstName: true,
+                  lastName: true
+                }
+              }
+            }
+          },
+          likes: {
+            select: {
+              id: true,
+              userId: true,
+              videoId: true
+            }
+          }
+        }
+      });
+
+      return res.status(200).json(data);
+    } catch (error) {
+      return res.status(400).send(error.message);
+    }
   }
 
-  const data = await prisma.video.findFirst({
-    where: {
-      id: {
-        equals: videoId
-      }
-    }
-  });
-
-  res.status(200).json(data);
+  return res.send('Method not allowed.');
 }
