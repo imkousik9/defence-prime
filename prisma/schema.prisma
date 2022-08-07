@@ -14,24 +14,27 @@ datasource db {
 }
 
 model User {
-  id        String @unique
+  id        String    @unique
   firstName String
   lastName  String
-  email     String @unique
+  email     String    @unique
   password  String
+  comments  Comment[]
+  likes     Like[]
 }
 
 model Video {
-  id          String  @unique
+  id          String    @unique
   title       String
   channelName String
   views       Int
   uploadedOn  String
-  avatar      String  @db.Text
-  description String? @db.Text
-
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
+  avatar      String    @db.Text
+  description String?   @db.Text
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  comments    Comment[]
+  likes       Like[]
 
   @@index([categoryId])
 }
@@ -40,4 +43,21 @@ model Category {
   id           String  @unique
   categoryName String
   videos       Video[]
+}
+
+model Comment {
+  id      String  @unique
+  text    String  @db.Text
+  video   Video?  @relation(fields: [videoId], references: [id])
+  videoId String?
+  user    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model Like {
+  id      String  @unique
+  user    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+  video   Video?  @relation(fields: [videoId], references: [id])
+  videoId String?
 }

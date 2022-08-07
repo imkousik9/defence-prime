@@ -51,7 +51,7 @@ export default async function signupHandler(
       const cookieSerialized = serializeCookie(token);
       res.setHeader('Set-Cookie', cookieSerialized);
 
-      return res.status(200).json({
+      return res.status(201).json({
         id: newUser?.id,
         firstName: newUser?.firstName,
         lastName: newUser?.lastName,
