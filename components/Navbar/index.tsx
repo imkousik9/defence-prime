@@ -1,18 +1,28 @@
+import { useAuth } from 'lib';
 import NextLink from 'next/link';
 
 import { MenuIcon, SearchIcon, UserCircleIcon } from '@heroicons/react/solid';
 
 import style from './Navbar.module.css';
-import { useAuth } from 'lib';
+import { Dispatch, SetStateAction } from 'react';
 
-const Navbar = () => {
+interface NavbarProps {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Navbar = ({ setOpen }: NavbarProps) => {
   const { user, signOut } = useAuth();
 
   return (
     <nav className={style.navbar}>
       <div className={style.navbar_main}>
         <div className={style.navbar_left}>
-          <MenuIcon className={style.menu_icon} />
+          <MenuIcon
+            className={style.menu_icon}
+            onClick={() => {
+              setOpen((prev) => !prev);
+            }}
+          />
           <div className="">
             <h2 className="">defence prime</h2>
           </div>

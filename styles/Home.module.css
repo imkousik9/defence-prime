@@ -1,0 +1,19 @@
+.home {
+  width: 100%;
+  margin-left: 5px;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .home {
+    margin-left: 95px;
+    padding: 1rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home {
+    margin-left: 250px;
+    padding: 2rem;
+  }
+}

@@ -1,4 +1,4 @@
-import { ReactNode, FC } from 'react';
+import { ReactNode, FC, useState } from 'react';
 import Head from 'next/head';
 
 import Navbar from 'components/Navbar';
@@ -11,15 +11,17 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Head>
         <title>defence prime</title>
       </Head>
 
-      <Navbar />
+      <Navbar setOpen={setOpen} />
       <main className={style.container}>
-        <Sidebar />
+        <Sidebar open={open} />
         {children}
       </main>
     </>
