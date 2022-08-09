@@ -1,0 +1,49 @@
+.likedVideo {
+  display: flex;
+  height: 130px;
+  margin-bottom: 3rem;
+  gap: 1rem;
+  box-shadow: #ec8282 0px 0px 9px 2px;
+  border-radius: 10px;
+  transition: transform 200ms ease;
+}
+
+.likedVideo:hover {
+  transform: scale(1.01, 1.01);
+}
+
+.likedVideo_img {
+  height: 100%;
+  object-fit: contain;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.likedVideo_info {
+  padding-block: 1rem;
+}
+
+.likedVideo_info h4 {
+  font-size: 0.9rem;
+}
+
+.likedVideo_info p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .likedVideo {
+    gap: 2rem;
+  }
+
+  .likedVideo_info h4 {
+    font-size: initial;
+  }
+}
+
+@media (min-width: 1024px) {
+  .likedVideo {
+    gap: 3rem;
+  }
+}

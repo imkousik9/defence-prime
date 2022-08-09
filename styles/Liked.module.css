@@ -1,0 +1,16 @@
+.likedVideos_container {
+  width: 100%;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .likedVideos_container {
+    margin-left: 95px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .likedVideos_container {
+    margin-left: 250px;
+  }
+}

@@ -3,7 +3,7 @@ import { protect } from 'lib';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { nanoid } from 'nanoid';
 
-export default async function LikeHandler(
+export default async function likeHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -15,7 +15,6 @@ export default async function LikeHandler(
   }
 
   if (req.method === 'POST') {
-    console.log(authUser, videoId);
     try {
       const userLikeVideo = await prisma.like.create({
         data: {
