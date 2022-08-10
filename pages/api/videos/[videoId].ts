@@ -38,6 +38,13 @@ export default async function videoHandler(
               userId: true,
               videoId: true
             }
+          },
+          watchLater: {
+            select: {
+              id: true,
+              userId: true,
+              videoId: true
+            }
           }
         }
       });

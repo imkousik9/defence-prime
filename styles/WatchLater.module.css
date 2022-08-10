@@ -1,0 +1,16 @@
+.watchLater_container {
+  width: 100%;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .watchLater_container {
+    margin-left: 95px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .watchLater_container {
+    margin-left: 250px;
+  }
+}

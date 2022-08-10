@@ -20,6 +20,11 @@ export type Video = {
     userId: string;
     videoId: string;
   }[];
+  watchLater?: {
+    id: string;
+    userId: string;
+    videoId: string;
+  }[];
 };
 
 const URL = process.env.NEXT_PUBLIC_URL;
