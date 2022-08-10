@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
-import { findLikedOrNot, viewsFormatter } from 'utils';
+import { findVideo, viewsFormatter } from 'utils';
 import { formatDistanceToNow } from 'date-fns';
 import { useAuth } from 'lib';
 import { Video } from 'lib/getVideo';
 
 import { ThumbUpIcon, ClockIcon } from '@heroicons/react/outline';
-import { ThumbUpIcon as ThumbUpSolidIcon } from '@heroicons/react/solid';
+import {
+  ThumbUpIcon as ThumbUpSolidIcon,
+  ClockIcon as ClockSolidIcon
+} from '@heroicons/react/solid';
 
 import style from './Video.module.css';
 
@@ -16,11 +19,13 @@ interface VideoProps {
 
 const Video = ({ video }: VideoProps) => {
   const [like, setLike] = useState(false);
+  const [watchLater, setWatchLater] = useState(false);
 
   const { user } = useAuth();
 
   useEffect(() => {
-    setLike(findLikedOrNot(video, user?.id));
+    setLike(findVideo(video?.likes, user?.id));
+    setWatchLater(findVideo(video?.watchLater, user?.id));
   }, [video, user?.id]);
 
   const likeUnlike = async () => {
@@ -39,6 +44,26 @@ const Video = ({ video }: VideoProps) => {
       .then((data) => {
         if (user?.id === data?.userId && video?.id === data?.videoId) {
           setLike(true);
+        }
+      });
+  };
+
+  const addRemoveWatchLater = async () => {
+    if (watchLater) {
+      return fetch(`/api/watch-later/${video?.id}`, {
+        method: 'DELETE'
+      }).then(() => {
+        setWatchLater(false);
+      });
+    }
+
+    fetch(`/api/watch-later/${video?.id}`, {
+      method: 'POST'
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (user?.id === data?.userId && video?.id === data?.videoId) {
+          setWatchLater(true);
         }
       });
   };
@@ -79,9 +104,16 @@ const Video = ({ video }: VideoProps) => {
                 </span>
               )}
 
-              <span>
-                <ClockIcon className={style.video_icon} /> Save to Watch later
-              </span>
+              {watchLater ? (
+                <span onClick={addRemoveWatchLater}>
+                  <ClockSolidIcon className={style.video_icon} /> Remove from
+                  Watch later
+                </span>
+              ) : (
+                <span onClick={addRemoveWatchLater}>
+                  <ClockIcon className={style.video_icon} /> Save to Watch later
+                </span>
+              )}
             </div>
           </div>
         </div>
