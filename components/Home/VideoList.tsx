@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import clsx from 'clsx';
 import { Videos } from 'lib/getVideos';
 
@@ -9,9 +9,16 @@ import style from './VideoList.module.css';
 interface VideoListProps {
   videos: Array<Videos>;
   categories: Array<string>;
+  setModal: Dispatch<SetStateAction<boolean>>;
+  setVideoId: Dispatch<SetStateAction<string>>;
 }
 
-const VideoList = ({ videos, categories }: VideoListProps) => {
+const VideoList = ({
+  videos,
+  categories,
+  setModal,
+  setVideoId
+}: VideoListProps) => {
   const [myVideos, setMyVideos] = useState(videos);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -61,6 +68,9 @@ const VideoList = ({ videos, categories }: VideoListProps) => {
               views={video?.views}
               uploadedOn={video?.uploadedOn}
               avatar={video?.avatar}
+              watchLater={video?.watchLater}
+              setModal={setModal}
+              setVideoId={setVideoId}
             />
           );
         })}
