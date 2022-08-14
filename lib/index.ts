@@ -1,6 +1,8 @@
 export { getVideos } from './getVideos';
 export { getVideo } from './getVideo';
 export { getLikes } from './getLikes';
+export { getPlaylists } from './gePlaylists';
+export { getPlaylist } from './gePlaylist';
 export { getWatchLater } from './getWatchLater';
 export { useAuth, AuthProvider } from './auth';
 export { serializeCookie } from './serializeCookie';

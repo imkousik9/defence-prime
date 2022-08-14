@@ -1,0 +1,84 @@
+.playlistModal_container {
+  background-color: #256072bf;
+  z-index: 9999;
+  position: fixed;
+  display: none;
+  place-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.playlistModal_show {
+  display: grid;
+}
+
+.playlistModal {
+  color: var(--font-color);
+  background-color: var(--bg-color);
+  opacity: 1;
+  padding: 1rem;
+  gap: 1.2rem;
+  width: 20rem;
+  border-radius: 5px;
+}
+
+.playlistModal_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.playlistModal_icon {
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.playlistModal_list {
+  margin-top: 1rem;
+}
+
+.playlistModal_selectInput {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.playlistModal_selectInput input {
+  cursor: pointer;
+  accent-color: #ec8282;
+}
+
+.playlistModal_input {
+  display: none;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.playlistModal_input_show {
+  display: flex;
+}
+
+.playlistModal_text_input {
+  border: none;
+  color: var(--font-color);
+  background-color: var(--container-color-dark);
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+}
+
+.playlistModal_btn {
+  margin-top: 1rem;
+  cursor: pointer;
+  color: var(--font-color);
+  background-color: #da6666;
+  border: none;
+  padding: 0.3rem;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.playlistModal_btn:hover {
+  background-color: #df5555;
+}
