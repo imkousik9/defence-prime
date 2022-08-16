@@ -8,17 +8,22 @@ export default async function likesHandler(
 ) {
   const authUser = protect(req, res);
 
+  if (!authUser) {
+    return res.end();
+  }
+
   if (req.method === 'GET') {
     try {
-      const userLikedVideos = await prisma.like.findMany({
+      const userLikedVideos = await prisma.user.findUnique({
         where: {
-          userId: authUser
+          id: authUser
         },
-        include: {
-          video: {
+        select: {
+          likes: {
             select: {
-              channelName: true,
-              title: true
+              id: true,
+              title: true,
+              channelName: true
             }
           }
         }

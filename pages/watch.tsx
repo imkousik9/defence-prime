@@ -1,4 +1,4 @@
-import { getVideo } from 'lib';
+import { getLikes, getVideo, getWatchLater } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
 import Layout from 'components/Layout';
@@ -9,24 +9,33 @@ import style from 'styles/Watch.module.css';
 
 const Watch: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ video }) => {
+> = ({ video, likes, watchLater }) => {
   return (
     <Layout>
       <div className={style.watch}>
-        <Video video={video} />
+        <Video video={video} likes={likes} watchLater={watchLater} />
         <CommentList video={video} />
       </div>
     </Layout>
   );
 };
 
-export const getServerSideProps = async ({ query }) => {
+export const getServerSideProps = async ({ req, query }) => {
   const id = query?.v;
 
   const video = await getVideo(id);
 
+  let likesAndWatchLater = [null, null];
+  if (req?.headers?.cookie) {
+    likesAndWatchLater = await Promise.all([getLikes(req), getWatchLater(req)]);
+  }
+
   return {
-    props: { video }
+    props: {
+      video,
+      likes: likesAndWatchLater[0],
+      watchLater: likesAndWatchLater[1]
+    }
   };
 };
 

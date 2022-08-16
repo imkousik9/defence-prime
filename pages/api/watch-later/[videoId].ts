@@ -14,6 +14,10 @@ export default async function watchLaterVideoHandler(
     return res.status(404).json({ message: 'videoId is not valid' });
   }
 
+  if (!authUser) {
+    return res.end();
+  }
+
   if (req.method === 'POST') {
     try {
       const addedVideo = await prisma.watchLater.create({
@@ -32,14 +36,14 @@ export default async function watchLaterVideoHandler(
 
   if (req.method === 'DELETE') {
     try {
-      const removedVideo = await prisma.watchLater.deleteMany({
+      await prisma.watchLater.deleteMany({
         where: {
           userId: authUser,
           videoId: videoId
         }
       });
 
-      return res.status(201).json(removedVideo);
+      return res.status(201).json({ userId: authUser, videoId: videoId });
     } catch (error) {
       return res.status(400).send(error.message);
     }

@@ -31,20 +31,6 @@ export default async function videoHandler(
                 }
               }
             }
-          },
-          likes: {
-            select: {
-              id: true,
-              userId: true,
-              videoId: true
-            }
-          },
-          watchLater: {
-            select: {
-              id: true,
-              userId: true,
-              videoId: true
-            }
           }
         }
       });

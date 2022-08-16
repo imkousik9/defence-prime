@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import clsx from 'clsx';
 import { Videos } from 'lib/getVideos';
+import { WatchLater } from 'lib/getWatchLater';
 
 import VideoCard from './VideoCard';
 
@@ -9,6 +10,7 @@ import style from './VideoList.module.css';
 interface VideoListProps {
   videos: Array<Videos>;
   categories: Array<string>;
+  watchLater: Array<WatchLater>;
   setModal: Dispatch<SetStateAction<boolean>>;
   setVideoId: Dispatch<SetStateAction<string>>;
 }
@@ -16,6 +18,7 @@ interface VideoListProps {
 const VideoList = ({
   videos,
   categories,
+  watchLater,
   setModal,
   setVideoId
 }: VideoListProps) => {
@@ -68,7 +71,7 @@ const VideoList = ({
               views={video?.views}
               uploadedOn={video?.uploadedOn}
               avatar={video?.avatar}
-              watchLater={video?.watchLater}
+              watchLater={watchLater}
               setModal={setModal}
               setVideoId={setVideoId}
             />

@@ -15,7 +15,7 @@ const WatchLaterVideo = ({
   fetchWatchLaterVideos
 }: watchLaterVideoProps) => {
   const removeFromWatchLater = async () => {
-    await fetch(`/api/watch-later/${video?.videoId}`, {
+    await fetch(`/api/watch-later/${video?.video?.id}`, {
       method: 'DELETE'
     }).then(() => {
       fetchWatchLaterVideos();
@@ -24,11 +24,11 @@ const WatchLaterVideo = ({
 
   return (
     <div className={style.watchLaterVideo}>
-      <NextLink href={`/watch?v=${video?.videoId}`}>
+      <NextLink href={`/watch?v=${video?.video?.id}`}>
         <a className={style.watchLaterVideo_left}>
           <img
             className={style.watchLaterVideo_img}
-            src={`https://img.youtube.com/vi/${video?.videoId}/maxresdefault.jpg`}
+            src={`https://img.youtube.com/vi/${video?.video?.id}/maxresdefault.jpg`}
             alt=""
           />
 

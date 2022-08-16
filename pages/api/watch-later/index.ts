@@ -8,15 +8,20 @@ export default async function watchLaterVideosHandler(
 ) {
   const authUser = protect(req, res);
 
+  if (!authUser) {
+    return res.end();
+  }
+
   if (req.method === 'GET') {
     try {
       const addedVideos = await prisma.watchLater.findMany({
         where: {
           userId: authUser
         },
-        include: {
+        select: {
           video: {
             select: {
+              id: true,
               channelName: true,
               title: true
             }

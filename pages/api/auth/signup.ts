@@ -32,7 +32,7 @@ export default async function signupHandler(
       });
 
       if (user) {
-        throw new Error('User already exists.');
+        return res.status(401).send('User already exists.');
       }
 
       const hashPassword = await bcrypt.hash(password, 12);

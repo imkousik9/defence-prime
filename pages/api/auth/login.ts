@@ -18,7 +18,7 @@ export default async function loginHandler(
   if (req.method === 'POST') {
     try {
       if (!email || !password) {
-        throw new Error('Email and password must be provided.');
+        throw new Error('Please provide email and password!');
       }
 
       const user = await prisma.user.findUnique({
@@ -34,17 +34,17 @@ export default async function loginHandler(
           const cookieSerialized = serializeCookie(token);
           res.setHeader('Set-Cookie', cookieSerialized);
 
-          return res
-            .status(200)
-            .json({
-              id: user?.id,
-              firstName: user?.firstName,
-              lastName: user?.lastName,
-              email: user?.email
-            });
+          return res.status(200).json({
+            id: user?.id,
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            email: user?.email
+          });
+        } else {
+          return res.status(401).send('Incorrect email or password');
         }
       } else {
-        throw new Error('User does not exist.');
+        return res.status(401).send('Incorrect email or password');
       }
     } catch (error) {
       return res.status(400).send(error.message);

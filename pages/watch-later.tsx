@@ -21,23 +21,31 @@ const WatchLater: NextPage<
   return (
     <Layout>
       <div className={style.watchLater_container}>
-        <div className={style.watchLater}>
-          {videos?.map((video) => (
-            <WatchLaterVideo
-              key={video?.id}
-              video={video}
-              fetchWatchLaterVideos={fetchWatchLaterVideos}
-            />
-          ))}
-        </div>
+        {!(videos.length > 0) ? (
+          <div className={style.watchLater_empty}>
+            <p>you have not added anything yet for later.</p>
+          </div>
+        ) : (
+          <div className={style.watchLater}>
+            {videos?.map((video) => (
+              <WatchLaterVideo
+                key={video?.video.id}
+                video={video}
+                fetchWatchLaterVideos={fetchWatchLaterVideos}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </Layout>
   );
 };
 
 export const getServerSideProps = async ({ req }) => {
-  const watchLater = await getWatchLater(req);
-
+  let watchLater = null;
+  if (req?.headers?.cookie) {
+    watchLater = await getWatchLater(req);
+  }
   return {
     props: { watchLater }
   };

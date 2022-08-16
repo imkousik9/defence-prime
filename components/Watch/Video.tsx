@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
-import { findVideo, viewsFormatter } from 'utils';
+import { useRouter } from 'next/router';
+import { viewsFormatter } from 'utils';
 import { formatDistanceToNow } from 'date-fns';
 import { useAuth } from 'lib';
 import { Video } from 'lib/getVideo';
+import { Like } from 'lib/getLikes';
+import { WatchLater } from 'lib/getWatchLater';
 
 import { ThumbUpIcon, ClockIcon } from '@heroicons/react/outline';
 import {
@@ -15,57 +18,79 @@ import style from './Video.module.css';
 
 interface VideoProps {
   video: Video;
+  likes: Like[];
+  watchLater: WatchLater[];
 }
 
-const Video = ({ video }: VideoProps) => {
+const Video = ({ video, likes, watchLater }: VideoProps) => {
   const [like, setLike] = useState(false);
-  const [watchLater, setWatchLater] = useState(false);
+  const [myWatchLater, setMyWatchLater] = useState(false);
 
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    setLike(findVideo(video?.likes, user?.id));
-    setWatchLater(findVideo(video?.watchLater, user?.id));
-  }, [video, user?.id]);
+    const isLiked = likes?.some((like) => like?.id === video?.id);
+    if (isLiked) setLike(true);
 
-  const likeUnlike = async () => {
-    if (like) {
-      return fetch(`/api/likes/${video?.id}`, {
-        method: 'DELETE'
-      }).then(() => {
-        setLike(false);
-      });
+    const isPresent = watchLater?.some(
+      (watch) => watch?.video?.id === video?.id
+    );
+    if (isPresent) setMyWatchLater(true);
+  }, [video, watchLater, user?.id, likes]);
+
+  const likeUnlike = async (videoId: string, userId: string) => {
+    if (user) {
+      if (like) {
+        return fetch(`/api/likes/${videoId}`, {
+          method: 'PATCH'
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const isLiked = data?.likes?.some((like) => like?.id === userId);
+            if (!isLiked) setLike(false);
+          });
+      }
+
+      fetch(`/api/likes/${videoId}`, {
+        method: 'PUT'
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const isLiked = data?.likes?.some((like) => like?.id === userId);
+          setLike(isLiked);
+        });
+    } else {
+      router.push('/login');
     }
-
-    fetch(`/api/likes/${video?.id}`, {
-      method: 'POST'
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (user?.id === data?.userId && video?.id === data?.videoId) {
-          setLike(true);
-        }
-      });
   };
 
-  const addRemoveWatchLater = async () => {
-    if (watchLater) {
-      return fetch(`/api/watch-later/${video?.id}`, {
-        method: 'DELETE'
-      }).then(() => {
-        setWatchLater(false);
-      });
-    }
+  const addRemoveWatchLater = async (videoId: string) => {
+    if (user) {
+      if (myWatchLater) {
+        return fetch(`/api/watch-later/${videoId}`, {
+          method: 'DELETE'
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (user?.id === data?.userId && videoId === data?.videoId) {
+              setMyWatchLater(false);
+            }
+          });
+      }
 
-    fetch(`/api/watch-later/${video?.id}`, {
-      method: 'POST'
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (user?.id === data?.userId && video?.id === data?.videoId) {
-          setWatchLater(true);
-        }
-      });
+      fetch(`/api/watch-later/${videoId}`, {
+        method: 'POST'
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (user?.id === data?.userId && videoId === data?.videoId) {
+            setMyWatchLater(true);
+          }
+        });
+    } else {
+      router.push('/login');
+    }
   };
 
   return (
@@ -95,22 +120,34 @@ const Video = ({ video }: VideoProps) => {
 
             <div className={style.video_icons}>
               {like ? (
-                <span onClick={likeUnlike}>
+                <span onClick={() => {}}>
                   <ThumbUpSolidIcon className={style.video_icon} /> Liked
                 </span>
               ) : (
-                <span onClick={likeUnlike}>
+                <span
+                  onClick={() => {
+                    likeUnlike(video?.id, user?.id);
+                  }}
+                >
                   <ThumbUpIcon className={style.video_icon} /> Like
                 </span>
               )}
 
-              {watchLater ? (
-                <span onClick={addRemoveWatchLater}>
+              {myWatchLater ? (
+                <span
+                  onClick={() => {
+                    addRemoveWatchLater(video?.id);
+                  }}
+                >
                   <ClockSolidIcon className={style.video_icon} /> Remove from
                   Watch later
                 </span>
               ) : (
-                <span onClick={addRemoveWatchLater}>
+                <span
+                  onClick={() => {
+                    addRemoveWatchLater(video?.id);
+                  }}
+                >
                   <ClockIcon className={style.video_icon} /> Save to Watch later
                 </span>
               )}

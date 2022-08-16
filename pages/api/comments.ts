@@ -10,6 +10,10 @@ export default async function commentHandler(
   if (req.method === 'POST') {
     const user = protect(req, res);
 
+    if (!user) {
+      return res.end();
+    }
+
     const { text, videoId } = req.body;
 
     try {
