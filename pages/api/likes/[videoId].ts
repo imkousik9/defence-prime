@@ -1,7 +1,6 @@
 import { prisma } from 'lib/prisma';
 import { protect } from 'lib';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { nanoid } from 'nanoid';
 
 export default async function likeHandler(
   req: NextApiRequest,
@@ -14,13 +13,28 @@ export default async function likeHandler(
     return res.status(404).json({ message: 'videoId is not valid' });
   }
 
-  if (req.method === 'POST') {
+  if (!authUser) {
+    return res.end();
+  }
+
+  if (req.method === 'PUT') {
     try {
-      const userLikeVideo = await prisma.like.create({
+      const userLikeVideo = await prisma.video.update({
+        where: {
+          id: videoId
+        },
         data: {
-          id: nanoid(),
-          userId: authUser,
-          videoId: videoId
+          likes: {
+            connect: [{ id: authUser }]
+          }
+        },
+        select: {
+          id: true,
+          likes: {
+            select: {
+              id: true
+            }
+          }
         }
       });
 
@@ -30,16 +44,20 @@ export default async function likeHandler(
     }
   }
 
-  if (req.method === 'DELETE') {
+  if (req.method === 'PATCH') {
     try {
-      const userLikeVideo = await prisma.like.deleteMany({
+      const userUnlikeVideo = await prisma.video.update({
         where: {
-          userId: authUser,
-          videoId: videoId
+          id: videoId
+        },
+        data: {
+          likes: {
+            disconnect: [{ id: authUser }]
+          }
         }
       });
 
-      return res.status(201).json(userLikeVideo);
+      return res.status(201).json(userUnlikeVideo);
     } catch (error) {
       return res.status(400).send(error.message);
     }

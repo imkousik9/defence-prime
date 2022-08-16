@@ -10,17 +10,17 @@ interface LikedVideoProps {
 const LikedVideo = ({ like }: LikedVideoProps) => {
   return (
     <>
-      <NextLink href={`/watch?v=${like?.videoId}`}>
+      <NextLink href={`/watch?v=${like?.id}`}>
         <a className={style.likedVideo}>
           <img
             className={style.likedVideo_img}
-            src={`https://img.youtube.com/vi/${like?.videoId}/maxresdefault.jpg`}
+            src={`https://img.youtube.com/vi/${like?.id}/maxresdefault.jpg`}
             alt=""
           />
 
           <div className={style.likedVideo_info}>
-            <h4>{like.video?.title}</h4>
-            <p>{like.video?.channelName}</p>
+            <h4>{like?.title}</h4>
+            <p>{like?.channelName}</p>
           </div>
         </a>
       </NextLink>

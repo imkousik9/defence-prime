@@ -14,13 +14,13 @@ datasource db {
 }
 
 model User {
-  id         String       @unique
+  id         String       @id @unique
   firstName  String
   lastName   String
   email      String       @unique
   password   String
   comments   Comment[]
-  likes      Like[]
+  likes      Video[]
   watchLater WatchLater[]
   playlists  Playlist[]
 }
@@ -36,7 +36,7 @@ model Video {
   category    Category?    @relation(fields: [categoryId], references: [id])
   categoryId  String?
   comments    Comment[]
-  likes       Like[]
+  likes       User[]
   watchLater  WatchLater[]
   playlists   Playlist[]
 
@@ -50,20 +50,12 @@ model Category {
 }
 
 model Comment {
-  id      String  @unique
+  id      String  @id @unique
   text    String  @db.Text
   video   Video?  @relation(fields: [videoId], references: [id])
   videoId String?
   user    User?   @relation(fields: [userId], references: [id])
   userId  String?
-}
-
-model Like {
-  id      String  @unique
-  user    User?   @relation(fields: [userId], references: [id])
-  userId  String?
-  video   Video?  @relation(fields: [videoId], references: [id])
-  videoId String?
 }
 
 model WatchLater {

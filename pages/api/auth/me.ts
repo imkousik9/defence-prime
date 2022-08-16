@@ -10,6 +10,10 @@ export default async function userHandler(
     try {
       const authUser = protect(req, res);
 
+      if (!authUser) {
+        return res.end();
+      }
+
       const user = await prisma.user.findUnique({
         where: {
           id: authUser
@@ -23,7 +27,9 @@ export default async function userHandler(
       });
 
       if (!user) {
-        throw new Error('User does not exist.');
+        return res
+          .status(401)
+          .send('The user belonging to this token does no longer exist.');
       }
 
       return res.status(200).json(user);

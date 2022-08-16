@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { findVideo, trimExtraChars, viewsFormatter } from 'utils';
+import { trimExtraChars, viewsFormatter } from 'utils';
 import { formatDistanceToNow } from 'date-fns';
 import clsx from 'clsx';
 import { useAuth } from 'lib';
@@ -17,18 +17,20 @@ const VideoCard = ({
   views,
   uploadedOn,
   avatar,
+  watchLater,
   setModal,
   setVideoId
 }) => {
   const [showList, setShowList] = useState(false);
-  const [watchLater, setWatchLater] = useState(false);
+  const [myWatchLater, setMyWatchLater] = useState(false);
 
   const { user } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   setWatchLater(findVideo(video?.watchLater, user?.id));
-  // }, [video, user?.id]);
+  useEffect(() => {
+    const isPresent = watchLater?.some((watch) => watch?.video?.id === id);
+    if (isPresent) setMyWatchLater(true);
+  }, [id, watchLater]);
 
   const addToPlaylist = () => {
     if (user) {
@@ -39,14 +41,18 @@ const VideoCard = ({
     }
   };
 
-  const addRemoveWatchLater = async (videoId) => {
+  const addRemoveWatchLater = async (videoId: string) => {
     if (user) {
-      if (watchLater) {
+      if (myWatchLater) {
         return fetch(`/api/watch-later/${videoId}`, {
           method: 'DELETE'
-        }).then(() => {
-          setWatchLater(false);
-        });
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (user?.id === data?.userId && videoId === data?.videoId) {
+              setMyWatchLater(false);
+            }
+          });
       }
 
       fetch(`/api/watch-later/${videoId}`, {
@@ -55,7 +61,7 @@ const VideoCard = ({
         .then((res) => res.json())
         .then((data) => {
           if (user?.id === data?.userId && videoId === data?.videoId) {
-            setWatchLater(true);
+            setMyWatchLater(true);
           }
         });
     } else {
@@ -111,7 +117,7 @@ const VideoCard = ({
                 addRemoveWatchLater(id);
               }}
             >
-              {watchLater ? (
+              {myWatchLater ? (
                 <span
                   className={clsx(
                     style.videoCard_option,

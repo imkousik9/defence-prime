@@ -3,6 +3,12 @@
   padding: 2rem;
 }
 
+.likedVideos_empty {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
+
 @media (min-width: 768px) {
   .likedVideos_container {
     margin-left: 95px;

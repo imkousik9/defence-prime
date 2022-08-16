@@ -3,6 +3,12 @@
   padding: 2rem;
 }
 
+.watchLater_empty {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
+
 @media (min-width: 768px) {
   .watchLater_container {
     margin-left: 95px;

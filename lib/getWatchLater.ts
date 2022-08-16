@@ -1,8 +1,5 @@
 export type WatchLater = {
-  id: string;
-  userId?: string;
-  videoId?: string;
-  video?: { title: string; channelName: string };
+  video?: { id: string; title: string; channelName: string };
 };
 
 const URL = process.env.NEXT_PUBLIC_URL;
