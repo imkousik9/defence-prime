@@ -1,25 +1,25 @@
-import { getLikes } from 'lib';
-import { InferGetServerSidePropsType, NextPage } from 'next';
+import { fetchHistory } from 'lib';
+import type { InferGetServerSidePropsType, NextPage } from 'next';
 
 import Layout from 'components/Layout';
 import LikedVideo from 'components/LikedVideo';
 
 import style from 'styles/Liked.module.css';
 
-const LikedVideos: NextPage<
+const History: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ likes }) => {
+> = ({ history }) => {
   return (
     <Layout>
       <div className={style.likedVideos_container}>
-        {!(likes.length > 0) ? (
+        {!(history.length > 0) ? (
           <div className={style.likedVideos_empty}>
-            <p>you have not liked anything</p>
+            <p>you have not watched anything</p>
           </div>
         ) : (
           <div className={style.likedVideos}>
-            {likes?.map((like) => (
-              <LikedVideo key={like?.id} like={like} />
+            {history?.map((item) => (
+              <LikedVideo key={item?.id} like={item} />
             ))}
           </div>
         )}
@@ -29,13 +29,11 @@ const LikedVideos: NextPage<
 };
 
 export const getServerSideProps = async ({ req }) => {
-  let likes = null;
-  if (req?.headers?.cookie?.jwt) {
-    likes = await getLikes(req);
-  }
+  const history = await fetchHistory(req);
+
   return {
-    props: { likes }
+    props: { history }
   };
 };
 
-export default LikedVideos;
+export default History;

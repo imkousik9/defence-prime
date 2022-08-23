@@ -69,10 +69,25 @@ const VideoCard = ({
     }
   };
 
+  const addHistory = async (id: string, title: string, channelName: string) => {
+    await fetch(`/api/history`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({ id, title, channelName })
+    });
+  };
+
   return (
     <div className={style.videoCard}>
       <NextLink href={`/watch?v=${id}`}>
-        <a>
+        <a
+          onClick={() => {
+            addHistory(id, title, channelName);
+          }}
+        >
           <img
             className={style.videoCard_img}
             src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
@@ -83,7 +98,12 @@ const VideoCard = ({
 
       <div className={style.videoCard_info}>
         <NextLink href={`/watch?v=${id}`}>
-          <a className={style.videoCard_left}>
+          <a
+            className={style.videoCard_left}
+            onClick={() => {
+              addHistory(id, title, channelName);
+            }}
+          >
             <img src={avatar} alt={channelName} />
             <div className={style.videoCard_title}>
               <h3>{trimExtraChars(title)}</h3>
