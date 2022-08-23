@@ -74,8 +74,7 @@ const PlaylistVideos: NextPage<
 export const getServerSideProps = async ({ req, query }) => {
   const id = query?.playlistId;
 
-  let playlist = null;
-  if (req?.headers?.cookie) playlist = await getPlaylist(id, req);
+  const playlist = await getPlaylist(id, req);
 
   return {
     props: { playlist }

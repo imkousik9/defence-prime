@@ -66,8 +66,7 @@ const Playlists: NextPage<
 };
 
 export const getServerSideProps = async ({ req }) => {
-  let playlists = null;
-  if (req?.headers?.cookie) playlists = await getPlaylists(req);
+  const playlists = await getPlaylists(req);
 
   return {
     props: { playlists }

@@ -29,10 +29,8 @@ const LikedVideos: NextPage<
 };
 
 export const getServerSideProps = async ({ req }) => {
-  let likes = null;
-  if (req?.headers?.cookie?.jwt) {
-    likes = await getLikes(req);
-  }
+  const likes = await getLikes(req);
+
   return {
     props: { likes }
   };

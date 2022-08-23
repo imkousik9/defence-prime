@@ -10,3 +10,4 @@ export { useAuth, AuthProvider } from './auth';
 export { serializeCookie } from './serializeCookie';
 export { createToken } from './createToken';
 export { protect } from './protect';
+export { parseAuthCookie } from './parseAuthCookie';
