@@ -42,10 +42,8 @@ const WatchLater: NextPage<
 };
 
 export const getServerSideProps = async ({ req }) => {
-  let watchLater = null;
-  if (req?.headers?.cookie) {
-    watchLater = await getWatchLater(req);
-  }
+  const watchLater = await getWatchLater(req);
+
   return {
     props: { watchLater }
   };

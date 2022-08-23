@@ -1,10 +1,8 @@
-import cookie from 'cookie';
+import { parseAuthCookie } from 'lib';
 import { decode } from 'jsonwebtoken';
 
 export const protect = (req, res) => {
-  const cookies = cookie.parse(req.headers.cookie ?? '');
-
-  const jwtCookies = cookies['jwt'];
+  const jwtCookies = parseAuthCookie(req);
 
   if (!jwtCookies) {
     return res

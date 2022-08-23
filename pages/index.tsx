@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getVideos, getWatchLater } from 'lib';
+import { getVideos, getWatchLater, parseAuthCookie } from 'lib';
 import { getCategories } from 'utils';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
@@ -39,11 +39,13 @@ const Home: NextPage<
 };
 
 export const getServerSideProps = async ({ req }) => {
+  const authUser = parseAuthCookie(req);
+
   const videos = await getVideos();
   const categories = getCategories(videos);
 
   let watchLater = null;
-  if (req?.headers?.cookie) {
+  if (authUser) {
     watchLater = await getWatchLater(req);
   }
   return {

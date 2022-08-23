@@ -1,4 +1,4 @@
-import { getLikes, getVideo, getWatchLater } from 'lib';
+import { getLikes, getVideo, getWatchLater, parseAuthCookie } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
 import Layout from 'components/Layout';
@@ -23,10 +23,11 @@ const Watch: NextPage<
 export const getServerSideProps = async ({ req, query }) => {
   const id = query?.v;
 
+  const authUser = parseAuthCookie(req);
   const video = await getVideo(id);
 
   let likesAndWatchLater = [null, null];
-  if (req?.headers?.cookie) {
+  if (authUser) {
     likesAndWatchLater = await Promise.all([getLikes(req), getWatchLater(req)]);
   }
 
