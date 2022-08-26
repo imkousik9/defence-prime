@@ -6,7 +6,7 @@ const useVideoController = (videos: Videos[]) => {
 
   const filteredVideos = useMemo(
     () =>
-      videos.filter((video) =>
+      videos?.filter((video) =>
         video.title.toLowerCase().includes(filter.toLowerCase())
       ),
     [filter, videos]
