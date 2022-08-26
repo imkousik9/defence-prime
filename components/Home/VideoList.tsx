@@ -25,8 +25,6 @@ const VideoList = ({
   const [myVideos, setMyVideos] = useState(() => videos);
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  console.count('render');
-
   useEffect(() => {
     setMyVideos(videos);
   }, [videos]);
