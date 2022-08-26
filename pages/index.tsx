@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getVideos, getWatchLater, parseAuthCookie } from 'lib';
+import { getVideos, getWatchLater, parseAuthCookie, useVideos } from 'lib';
 import { getCategories } from 'utils';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
@@ -11,10 +11,10 @@ import PlaylistModal from 'components/PlaylistModal';
 
 const Home: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
-> = ({ videos, categories, watchLater }) => {
+> = ({ categories, watchLater }) => {
   const [modal, setModal] = useState(false);
   const [videoId, setVideoId] = useState('');
-
+  const { videos } = useVideos();
   return (
     <Layout>
       {modal && (

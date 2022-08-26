@@ -1,10 +1,10 @@
-import { useAuth } from 'lib';
+import { Dispatch, SetStateAction } from 'react';
 import NextLink from 'next/link';
+import { useAuth, useVideos } from 'lib';
 
 import { MenuIcon, SearchIcon, UserCircleIcon } from '@heroicons/react/solid';
 
 import style from './Navbar.module.css';
-import { Dispatch, SetStateAction } from 'react';
 
 interface NavbarProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -12,6 +12,7 @@ interface NavbarProps {
 
 const Navbar = ({ setOpen }: NavbarProps) => {
   const { user, signOut } = useAuth();
+  const { filter, setFilter } = useVideos();
 
   return (
     <nav className={style.navbar}>
@@ -34,7 +35,8 @@ const Navbar = ({ setOpen }: NavbarProps) => {
             name="search"
             className={style.search_bar}
             placeholder="Search for video"
-            id=""
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
           />
         </div>
 
