@@ -1,11 +1,13 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { AuthProvider } from 'lib';
+import { AuthProvider, VideosProvider } from 'lib';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <VideosProvider videos={pageProps.videos}>
+        <Component {...pageProps} />
+      </VideosProvider>
     </AuthProvider>
   );
 }

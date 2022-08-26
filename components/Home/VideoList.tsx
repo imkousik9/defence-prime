@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { Videos } from 'lib/getVideos';
 import { WatchLater } from 'lib/getWatchLater';
@@ -22,8 +22,12 @@ const VideoList = ({
   setModal,
   setVideoId
 }: VideoListProps) => {
-  const [myVideos, setMyVideos] = useState(videos);
+  const [myVideos, setMyVideos] = useState(() => videos);
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    setMyVideos(videos);
+  }, [videos]);
 
   const filterHandler = (category: string) => {
     setSelectedCategory(category);
