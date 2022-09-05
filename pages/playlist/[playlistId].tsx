@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getPlaylist, useAuth } from 'lib';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
-import { Playlist } from 'lib/gePlaylist';
 
 import Layout from 'components/Layout';
 import PlaylistVideoCard from 'components/Playlist/PlaylistVideoCard';
@@ -12,7 +11,7 @@ import style from 'styles/Playlist.module.css';
 const PlaylistVideos: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ playlist }) => {
-  const [myPlaylist, setMyPlaylist] = useState<Playlist>(playlist);
+  const [myPlaylist, setMyPlaylist] = useState(() => playlist);
 
   const { user } = useAuth();
   const router = useRouter();
@@ -49,20 +48,22 @@ const PlaylistVideos: NextPage<
               <p>({myPlaylist?.videos?.length} videos)</p>
             </div>
 
-            <div className={style.grid}>
-              {myPlaylist?.videos?.map((video) => (
-                <PlaylistVideoCard
-                  key={video?.id}
-                  id={video?.id}
-                  playlistId={playlist?.id}
-                  title={video?.title}
-                  channelName={video?.channelName}
-                  views={video?.views}
-                  uploadedOn={video?.uploadedOn}
-                  avatar={video?.avatar}
-                  removeFromPlaylist={removeFromPlaylist}
-                />
-              ))}
+            <div className={style.playlist_videos}>
+              <div className="grid">
+                {myPlaylist?.videos?.map((video) => (
+                  <PlaylistVideoCard
+                    key={video?.id}
+                    id={video?.id}
+                    playlistId={playlist?.id}
+                    title={video?.title}
+                    channelName={video?.channelName}
+                    views={video?.views}
+                    uploadedOn={video?.uploadedOn}
+                    avatar={video?.avatar}
+                    removeFromPlaylist={removeFromPlaylist}
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}

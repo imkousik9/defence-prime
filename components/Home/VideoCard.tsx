@@ -111,9 +111,7 @@ const VideoCard = ({
                 <p>{channelName}</p>
                 <p>
                   {viewsFormatter(views)} views •{' '}
-                  {formatDistanceToNow(new Date(uploadedOn), {
-                    addSuffix: true
-                  })}
+                  {formatDistanceToNow(new Date(uploadedOn))}
                 </p>
               </div>
             </div>

@@ -3,19 +3,21 @@ import NextLink from 'next/link';
 import Head from 'next/head';
 import { useAuth } from 'lib';
 import type { NextPage } from 'next';
+
 import { ChevronRightIcon } from '@heroicons/react/solid';
 
 import style from 'styles/Auth.module.css';
 
 const Signup: NextPage = () => {
-  const { signUp } = useAuth();
+  const { signUp, loading, error } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  const signUpHandler = () => {
+  const signUpHandler = (e) => {
+    e.preventDefault();
     if (email && password && firstName && lastName !== '') {
       signUp(firstName, lastName, email, password);
     }
@@ -33,7 +35,7 @@ const Signup: NextPage = () => {
           <div className={style.auth_title}>
             <h2>Sign Up</h2>
           </div>
-          <form className={style.auth_main}>
+          <form className={style.auth_main} onSubmit={(e) => signUpHandler(e)}>
             <div className={style.auth_fullname}>
               <div className={style.auth_name}>
                 <label htmlFor="firstname">First Name</label>
@@ -91,6 +93,8 @@ const Signup: NextPage = () => {
               />
             </div>
 
+            {error && <p className="error-msg">{error}</p>}
+
             <div className={style.auth_checkbox}>
               <label className={style.select_input}>
                 <input
@@ -103,9 +107,9 @@ const Signup: NextPage = () => {
               </label>
             </div>
 
-            <div className={style.auth_btn} onClick={signUpHandler}>
+            <button className={style.auth_btn} type="submit" disabled={loading}>
               Create New Account
-            </div>
+            </button>
 
             <NextLink href="/login">
               <a className={style.auth_link}>

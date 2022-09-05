@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from 'lib';
 import { Video } from 'lib/getVideo';

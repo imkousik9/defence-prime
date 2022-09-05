@@ -3,7 +3,7 @@ import { getWatchLater } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
 import Layout from 'components/Layout';
-import WatchLaterVideo from 'components/WatchLaterVideo';
+import CommonVideoCard from 'components/Common/CommonVideoCard';
 
 import style from 'styles/WatchLater.module.css';
 
@@ -28,10 +28,11 @@ const WatchLater: NextPage<
         ) : (
           <div className={style.watchLater}>
             {videos?.map((video) => (
-              <WatchLaterVideo
+              <CommonVideoCard
                 key={video?.video.id}
-                video={video}
+                video={video?.video}
                 fetchWatchLaterVideos={fetchWatchLaterVideos}
+                isWatchLater
               />
             ))}
           </div>

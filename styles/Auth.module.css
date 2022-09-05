@@ -95,8 +95,14 @@
   font-size: inherit;
 }
 
+.auth_test_btn:hover,
 .auth_btn:hover {
   background-color: #df5555;
+}
+
+.auth_btn:disabled {
+  background-color: #f7c4c4;
+  cursor: not-allowed;
 }
 
 .auth_link {
