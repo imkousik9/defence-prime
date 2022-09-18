@@ -6,7 +6,7 @@ import Layout from 'components/Layout';
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <AuthProvider>
-      <VideosProvider videos={pageProps.videos}>
+      <VideosProvider pageProps={pageProps}>
         {router?.route !== '/signup' && router?.route !== '/login' ? (
           <Layout>
             <Component {...pageProps} />
