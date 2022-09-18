@@ -3,7 +3,6 @@ import { getPlaylists, useAuth } from 'lib';
 import { useRouter } from 'next/router';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
-import Layout from 'components/Layout';
 import PlaylistCard from 'components/Playlist';
 
 import style from 'styles/Playlist.module.css';
@@ -30,7 +29,7 @@ const Playlists: NextPage<
   };
 
   return (
-    <Layout>
+    <>
       <div className={style.playlist}>
         {!(myPlaylists.length > 0) ? (
           <div className={style.playlist_empty}>
@@ -62,7 +61,7 @@ const Playlists: NextPage<
           </>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

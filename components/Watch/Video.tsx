@@ -41,17 +41,6 @@ const Video = ({ video, likes, watchLater }: VideoProps) => {
 
   const likeUnlike = async (videoId: string, userId: string) => {
     if (user) {
-      if (like) {
-        return fetch(`/api/likes/${videoId}`, {
-          method: 'PATCH'
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const isLiked = data?.likes?.some((like) => like?.id === userId);
-            if (!isLiked) setLike(false);
-          });
-      }
-
       fetch(`/api/likes/${videoId}`, {
         method: 'PUT'
       })
@@ -120,7 +109,11 @@ const Video = ({ video, likes, watchLater }: VideoProps) => {
 
             <div className={style.video_icons}>
               {like ? (
-                <span onClick={() => {}}>
+                <span
+                  onClick={() => {
+                    likeUnlike(video?.id, user?.id);
+                  }}
+                >
                   <ThumbUpSolidIcon className={style.video_icon} /> Liked
                 </span>
               ) : (

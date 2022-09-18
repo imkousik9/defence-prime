@@ -4,7 +4,6 @@ import { getCategories } from 'utils';
 import clsx from 'clsx';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
 
-import Layout from 'components/Layout';
 import VideoCard from 'components/Home/VideoCard';
 
 import style from 'styles/Home.module.css';
@@ -40,7 +39,7 @@ const Home: NextPage<
   };
 
   return (
-    <Layout>
+    <>
       {modal && (
         <PlaylistModal
           modal={modal}
@@ -89,7 +88,7 @@ const Home: NextPage<
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

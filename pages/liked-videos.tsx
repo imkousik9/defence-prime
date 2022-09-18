@@ -1,7 +1,6 @@
 import { getLikes } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
-import Layout from 'components/Layout';
 import CommonVideoCard from 'components/Common/CommonVideoCard';
 
 import style from 'styles/Liked.module.css';
@@ -10,7 +9,7 @@ const LikedVideos: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ likes }) => {
   return (
-    <Layout>
+    <>
       <div className={style.likedVideos_container}>
         {!(likes.length > 0) ? (
           <div className={style.likedVideos_empty}>
@@ -24,7 +23,7 @@ const LikedVideos: NextPage<
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

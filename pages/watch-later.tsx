@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { getWatchLater } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
-import Layout from 'components/Layout';
 import CommonVideoCard from 'components/Common/CommonVideoCard';
 
 import style from 'styles/WatchLater.module.css';
@@ -19,7 +18,7 @@ const WatchLater: NextPage<
   };
 
   return (
-    <Layout>
+    <>
       <div className={style.watchLater_container}>
         {!(videos.length > 0) ? (
           <div className={style.watchLater_empty}>
@@ -38,7 +37,7 @@ const WatchLater: NextPage<
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

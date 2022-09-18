@@ -19,17 +19,11 @@ export default async function likeHandler(
 
   if (req.method === 'PUT') {
     try {
-      const userLikeVideo = await prisma.video.update({
+      const video = await prisma.video.findFirst({
         where: {
           id: videoId
         },
-        data: {
-          likes: {
-            connect: [{ id: authUser }]
-          }
-        },
         select: {
-          id: true,
           likes: {
             select: {
               id: true
@@ -38,26 +32,43 @@ export default async function likeHandler(
         }
       });
 
-      return res.status(201).json(userLikeVideo);
-    } catch (error) {
-      return res.status(400).send(error.message);
-    }
-  }
+      const isLiked = video?.likes?.some((like) => like?.id === authUser);
 
-  if (req.method === 'PATCH') {
-    try {
-      const userUnlikeVideo = await prisma.video.update({
-        where: {
-          id: videoId
-        },
-        data: {
-          likes: {
-            disconnect: [{ id: authUser }]
+      let userLikeVideo;
+
+      if (!isLiked) {
+        userLikeVideo = await prisma.video.update({
+          where: {
+            id: videoId
+          },
+          data: {
+            likes: {
+              connect: [{ id: authUser }]
+            }
+          },
+          select: {
+            id: true,
+            likes: {
+              select: {
+                id: true
+              }
+            }
           }
-        }
-      });
+        });
+      } else {
+        userLikeVideo = await prisma.video.update({
+          where: {
+            id: videoId
+          },
+          data: {
+            likes: {
+              disconnect: [{ id: authUser }]
+            }
+          }
+        });
+      }
 
-      return res.status(201).json(userUnlikeVideo);
+      return res.status(201).json(userLikeVideo);
     } catch (error) {
       return res.status(400).send(error.message);
     }
