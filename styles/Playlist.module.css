@@ -1,6 +1,8 @@
 .playlist {
   width: 100%;
-  margin-left: 5px;
+}
+
+.playlist_videos {
   padding: 1rem;
 }
 
@@ -14,33 +16,30 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-block: 1rem;
+  margin-left: 1rem;
 }
 
 .playlist_video_info p {
   font-size: 0.95rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem;
-}
-
 @media (min-width: 768px) {
   .playlist {
     margin-left: 95px;
-    padding: 1rem 3rem;
+  }
+
+  .playlist_video_info {
+    margin-left: 1.5rem;
+  }
+
+  .playlist_videos {
+    padding: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .playlist {
     margin-left: 250px;
-    padding: 1rem 2rem;
-  }
-
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

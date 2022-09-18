@@ -8,20 +8,7 @@ interface User {
   email: string;
 }
 
-interface AuthContext {
-  user: User;
-  loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
-  signOut: () => void;
-}
-
-const authContext = createContext<AuthContext | null>(null);
+const authContext = createContext<ReturnType<typeof useProvideAuth>>(null);
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
@@ -34,9 +21,12 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const signIn = async (email: string, password: string) => {
+    let responseClone;
+    setError('');
     setLoading(true);
     await fetch('/api/auth/login', {
       method: 'POST',
@@ -46,11 +36,21 @@ function useProvideAuth() {
 
       body: JSON.stringify({ email, password })
     })
-      .then((response) => response.json())
+      .then((response) => {
+        responseClone = response.clone();
+        return response.json();
+      })
       .then((data) => {
+        responseClone = null;
         setUser(data);
         setLoading(false);
         Router.push('/');
+      })
+      .catch(() => {
+        responseClone.text().then((bodyText) => {
+          setLoading(false);
+          setError(bodyText);
+        });
       });
   };
 
@@ -60,6 +60,8 @@ function useProvideAuth() {
     email: string,
     password: string
   ) => {
+    let responseClone;
+    setError('');
     setLoading(true);
     await fetch('/api/auth/signup', {
       method: 'POST',
@@ -69,19 +71,27 @@ function useProvideAuth() {
 
       body: JSON.stringify({ email, password, firstName, lastName })
     })
-      .then((response) => response.json())
+      .then((response) => {
+        responseClone = response.clone();
+        return response.json();
+      })
       .then((data) => {
+        responseClone = null;
         setUser(data);
         setLoading(false);
         Router.push('/');
+      })
+      .catch(() => {
+        responseClone.text().then((bodyText) => {
+          setLoading(false);
+          setError(bodyText);
+        });
       });
   };
 
   const signOut = () => {
-    setLoading(true);
     fetch('/api/auth/logout').then(() => {
       setUser(null);
-      setLoading(false);
       Router.push('/');
     });
   };
@@ -91,7 +101,6 @@ function useProvideAuth() {
       .then((response) => response.json())
       .then((data) => {
         setUser(data);
-        setLoading(false);
       });
   };
 
@@ -102,6 +111,7 @@ function useProvideAuth() {
   return {
     user,
     loading,
+    error,
     signIn,
     signUp,
     signOut

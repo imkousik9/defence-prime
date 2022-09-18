@@ -1,4 +1,4 @@
-.watchLaterVideo {
+.commonVideoCard {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -8,38 +8,39 @@
   transition: transform 200ms ease;
 }
 
-.watchLaterVideo:hover {
+.commonVideoCard:hover {
   transform: scale(1.01, 1.01);
 }
 
-.watchLaterVideo_img {
+.commonVideoCard_img {
   height: 100%;
   width: 150px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
-.watchLaterVideo_info {
+.commonVideoCard_info {
   padding-block: 1rem;
 }
 
-.watchLaterVideo_info h4 {
+.commonVideoCard_info h4 {
   font-size: 0.9rem;
 }
 
-.watchLaterVideo_info p {
+.commonVideoCard_info p {
   margin-top: 1rem;
   font-size: 0.85rem;
 }
 
-.watchLaterVideo_left {
+.commonVideoCard_left {
   flex: 1;
   display: flex;
   gap: 1rem;
   height: 130px;
 }
 
-.watchLaterVideo_icon_btn {
+.commonVideoCard_icon_btn {
+  visibility: hidden;
   cursor: pointer;
   display: grid;
   place-content: center;
@@ -51,33 +52,59 @@
   transition: color 200ms ease;
 }
 
-.watchLaterVideo_icon_btn:hover {
+.commonVideoCard_icon_btn_visible {
+  visibility: visible;
+}
+
+.commonVideoCard_icon_btn:hover {
   background-color: #e25151;
 }
 
-.watchLaterVideo_icon {
+.commonVideoCard_icon {
   color: white;
   height: 1.5rem;
 }
 
-@media (min-width: 768px) {
-  .watchLaterVideo_img {
+/* @media (min-width: 450px) {
+  .commonVideoCard_img {
     width: 200px;
   }
 
-  .watchLaterVideo {
+  .commonVideoCard {
     gap: 2rem;
   }
 
-  .watchLaterVideo_info h4 {
+  .commonVideoCard_info h4 {
     font-size: initial;
   }
 
-  .watchLaterVideo_icon {
+  .commonVideoCard_icon {
     height: 2rem;
   }
+  .commonVideoCard_icon_btn {
+    width: 60px;
+    height: 60px;
+    margin-right: 2rem;
+  }
+} */
 
-  .watchLaterVideo_icon_btn {
+@media (min-width: 768px) {
+  .commonVideoCard_img {
+    width: 200px;
+  }
+
+  .commonVideoCard {
+    gap: 2rem;
+  }
+
+  .commonVideoCard_info h4 {
+    font-size: initial;
+  }
+
+  .commonVideoCard_icon {
+    height: 2rem;
+  }
+  .commonVideoCard_icon_btn {
     width: 60px;
     height: 60px;
     margin-right: 2rem;
@@ -85,11 +112,11 @@
 }
 
 @media (min-width: 1024px) {
-  .watchLaterVideo {
+  .commonVideoCard {
     gap: 3rem;
   }
 
-  .watchLaterVideo_img {
+  .commonVideoCard_img {
     width: 250px;
   }
 }

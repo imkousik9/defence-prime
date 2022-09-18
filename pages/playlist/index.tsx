@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { getPlaylists, useAuth } from 'lib';
 import { useRouter } from 'next/router';
 import type { InferGetServerSidePropsType, NextPage } from 'next';
-import { Playlists } from 'lib/gePlaylists';
 
-import Layout from 'components/Layout';
 import PlaylistCard from 'components/Playlist';
 
 import style from 'styles/Playlist.module.css';
@@ -12,7 +10,7 @@ import style from 'styles/Playlist.module.css';
 const Playlists: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ playlists }) => {
-  const [myPlaylists, setMyPlaylists] = useState<Playlists[]>(playlists);
+  const [myPlaylists, setMyPlaylists] = useState(() => playlists);
 
   const { user } = useAuth();
   const router = useRouter();
@@ -31,7 +29,7 @@ const Playlists: NextPage<
   };
 
   return (
-    <Layout>
+    <>
       <div className={style.playlist}>
         {!(myPlaylists.length > 0) ? (
           <div className={style.playlist_empty}>
@@ -44,24 +42,26 @@ const Playlists: NextPage<
               <p>({myPlaylists?.length} playlists)</p>
             </div>
 
-            <div className={style.grid}>
-              {myPlaylists?.map((list) => {
-                return (
-                  <PlaylistCard
-                    key={list?.id}
-                    id={list?.id}
-                    name={list?.name}
-                    numberOfVideos={list?.videos?.length}
-                    firstVideoId={list?.videos[0]?.id}
-                    deletePlaylist={deletePlaylist}
-                  />
-                );
-              })}
+            <div className={style.playlist_videos}>
+              <div className="grid">
+                {myPlaylists?.map((list) => {
+                  return (
+                    <PlaylistCard
+                      key={list?.id}
+                      id={list?.id}
+                      name={list?.name}
+                      numberOfVideos={list?.videos?.length}
+                      firstVideoId={list?.videos[0]?.id}
+                      deletePlaylist={deletePlaylist}
+                    />
+                  );
+                })}
+              </div>
             </div>
           </>
         )}
       </div>
-    </Layout>
+    </>
   );
 };
 

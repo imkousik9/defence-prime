@@ -1,7 +1,6 @@
 import { getLikes, getVideo, getWatchLater, parseAuthCookie } from 'lib';
 import { InferGetServerSidePropsType, NextPage } from 'next';
 
-import Layout from 'components/Layout';
 import Video from 'components/Watch/Video';
 import CommentList from 'components/Watch/CommentList';
 
@@ -11,12 +10,12 @@ const Watch: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = ({ video, likes, watchLater }) => {
   return (
-    <Layout>
+    <>
       <div className={style.watch}>
         <Video video={video} likes={likes} watchLater={watchLater} />
         <CommentList video={video} />
       </div>
-    </Layout>
+    </>
   );
 };
 

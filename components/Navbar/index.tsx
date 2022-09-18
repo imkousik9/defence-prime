@@ -24,9 +24,12 @@ const Navbar = ({ setOpen }: NavbarProps) => {
               setOpen((prev) => !prev);
             }}
           />
-          <div className="">
-            <h2 className="">defence prime</h2>
-          </div>
+
+          <NextLink href="/">
+            <a>
+              <h2 className="">defence prime</h2>
+            </a>
+          </NextLink>
         </div>
         <div className={style.navbar_search}>
           <SearchIcon className={style.search_icon} />

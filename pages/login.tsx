@@ -9,7 +9,7 @@ import { ChevronRightIcon } from '@heroicons/react/solid';
 import style from 'styles/Auth.module.css';
 
 const Login: NextPage = () => {
-  const { signIn } = useAuth();
+  const { signIn, loading, error } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -70,6 +70,8 @@ const Login: NextPage = () => {
               />
             </div>
 
+            {error && <p className="error-msg">{error}</p>}
+
             <div className={style.auth_checkbox}>
               <label className={style.select_input}>
                 <input
@@ -94,7 +96,7 @@ const Login: NextPage = () => {
               Login with Test Credentials
             </div>
 
-            <button className={style.auth_btn} type="submit">
+            <button className={style.auth_btn} type="submit" disabled={loading}>
               Log In
             </button>
 

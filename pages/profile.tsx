@@ -1,15 +1,13 @@
 import { useAuth } from 'lib';
 import type { NextPage } from 'next';
 
-import Layout from 'components/Layout';
-
 import style from 'styles/Profile.module.css';
 
 const Profile: NextPage = () => {
   const { user } = useAuth();
 
   return (
-    <Layout>
+    <>
       <div className={style.profile}>
         <div className={style.profile_card}>
           <div className={style.profile_heading}>Profile</div>
@@ -28,7 +26,7 @@ const Profile: NextPage = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

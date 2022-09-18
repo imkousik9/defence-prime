@@ -25,8 +25,8 @@ const VideosContext = createContext<ReturnType<typeof useVideoController>>({
   videos: []
 });
 
-export const VideosProvider = ({ videos, children }) => (
-  <VideosContext.Provider value={useVideoController(videos)}>
+export const VideosProvider = ({ pageProps, children }) => (
+  <VideosContext.Provider value={useVideoController(pageProps?.videos)}>
     {children}
   </VideosContext.Provider>
 );

@@ -1,10 +1,9 @@
 .videoCard {
   width: 100%;
-  margin-bottom: 30px;
-  margin-bottom: 30px;
   box-shadow: #2d4263 0px 0px 5px 1px;
   grid-column: span 1 / span 1;
   border-radius: 10px;
+  margin-bottom: 30px;
 }
 
 .videoCard:hover {
@@ -19,8 +18,9 @@
 }
 .videoCard_info {
   display: flex;
-  gap: 0.8rem;
-  padding: 1rem;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.4rem;
 }
 
 .videoCard_left {
